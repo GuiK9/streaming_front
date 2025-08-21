@@ -3,18 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #273c75;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 30px 40px;
+        }
+        h2 {
+            color: #353b48;
+            margin-top: 0;
+        }
+        .cadastro-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 18px;
+            background: #44bd32;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .cadastro-link:hover {
+            background: #4cd137;
+        }
+        .video-list {
+            margin-top: 10px;
+        }
+        .video-item {
+            background: #f1f2f6;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            padding: 12px 18px;
+            box-shadow: 0 1px 3px rgba(44,62,80,0.04);
+        }
+        .video-link {
+            color: #273c75;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        .video-link:hover {
+            text-decoration: underline;
+            color: #192a56;
+        }
+        .empty {
+            color: #718093;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <h2>Vídeos</h2>
-        <div><a href="/cadastro">cadastre videos</a></div>
-
-        {% if not videos %}
-            <p>Nenhum vídeo disponível.</p>
-        {% endif %}
-        {% for video in videos %}
-            <div>
-                <a href="http://localhost/video/{{video.publicName}}" target="_blank">{{video.title}} / {{video.publicName}}</a>
-            </div>
-        {% endfor %}
+    <header>
+        <h1>Meu Site de Vídeos</h1>
+    </header>
+    <div class="container">
+        <h2>Vídeos</h2>
+        <a class="cadastro-link" href="/cadastro">Cadastrar vídeos</a>
+        <div class="video-list">
+            {% if not videos %}
+                <p class="empty">Nenhum vídeo disponível.</p>
+            {% endif %}
+            {% for video in videos %}
+                <div class="video-item">
+                    <a class="video-link" href="http://localhost/video/{{video.publicName}}" target="_blank">
+                        {{video.title}} / {{video.publicName}}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
