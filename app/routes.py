@@ -46,4 +46,5 @@ def upload():
 
 @main.route('/cadastro')
 def cadastro():
-    return render_template('formulario.html')
+    domain_api = os.getenv('DOMAIN_API')
+    return render_template('formulario.html', domain_api=domain_api)
