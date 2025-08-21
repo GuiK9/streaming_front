@@ -6,13 +6,14 @@
 </head>
 <body>
     <h2>Vídeos</h2>
+        <div><a href="/cadastro">cadastre videos</a></div>
 
         {% if not videos %}
             <p>Nenhum vídeo disponível.</p>
         {% endif %}
         {% for video in videos %}
             <div>
-                <a href="" target="_blank">{{video.title}}</a>
+                <a href="http://localhost/video/{{video.publicName}}" target="_blank">{{video.title}} / {{video.publicName}}</a>
             </div>
         {% endfor %}
 </body>
