@@ -2,15 +2,12 @@ from flask import Flask
 from dotenv import load_dotenv
 import os
 
-def create_app():
-    load_dotenv()
-    app = Flask(__name__)
-    app.config['DOMAIN_API'] = os.getenv('DOMAIN_API')
-    from .routes import main
-    app.register_blueprint(main)
-    return app
+load_dotenv()
+app = Flask(__name__)
+app.config['DOMAIN_API'] = os.getenv('DOMAIN_API')
 
-app = create_app()
+from app.routes import main
+app.register_blueprint(main)
 
 if __name__ == '__main__':
     app.run(debug=True)
