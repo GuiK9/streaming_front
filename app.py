@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-app = Flask(__name__)
+app = Flask(__name__, template_folder='app/templates')
 app.config['DOMAIN_API'] = os.getenv('DOMAIN_API')
 
 from app.routes import main

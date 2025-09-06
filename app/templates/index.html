@@ -89,5 +89,19 @@
             {% endfor %}
         </div>
     </div>
+
+    <Script>
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('success');
+        const errorMessage = urlParams.get('error');
+        if (successMessage) {
+            alert(successMessage);
+            window.history.replaceState({}, '', '/');
+        } else if (errorMessage) {
+            alert("Erro: " + errorMessage);
+            window.history.replaceState({}, '', '/');
+        }
+    </Script>
 </body>
 </html>

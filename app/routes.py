@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 import requests
 import os
 
@@ -7,13 +7,16 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def home():
     try:
-        print(os.getenv('DOMAIN_API') + '/api/videos')
-        response = requests.get(os.getenv('DOMAIN_API') + '/api/videos')
+        api_url = os.getenv('DOMAIN_API') + '/api/videos'
+        print(api_url)
+        response = requests.get(api_url)
+        error = request.args.get('error')
+        success = request.args.get('success')
         videos = response.json() if response.status_code == 200 else []
     except Exception as e:
         print(f"Error fetching videos: {e}")
         videos = []
-    return render_template('index.html', videos=videos)
+    return render_template('index.html', videos=videos, error=error, success=success)
 
 @main.route('/about')
 def about():
@@ -25,7 +28,7 @@ def upload():
     video_file = request.files.get('video')
 
     if not metadata_json or not video_file:
-        return "Metadata ou vídeo não enviados.", 400
+        return redirect(url_for('main.home', error='Metadata ou vídeo não enviados.'))
 
     files = {
         'metadata': (None, metadata_json, 'application/json'),
@@ -34,15 +37,15 @@ def upload():
 
     try:
         response = requests.post(
-            'http://localhost/api/videos',
+            os.getenv('DOMAIN_API') + '/api/videos',
             files=files
         )
         if response.status_code == 201:
-            return "Vídeo enviado com sucesso!", 201
+            return redirect(url_for('main.home', success='Vídeo enviado com sucesso!'))
         else:
-            return f"Erro ao enviar vídeo: {response.text}", response.status_code
+            return redirect(url_for('main.home', error=f"Erro ao enviar vídeo: {response.text}"))
     except Exception as e:
-        return f"Erro ao conectar à API: {e}",
+        return redirect(url_for('main.home', error=f"Erro ao conectar à API: {e}"))
 
 @main.route('/cadastro')
 def cadastro():
