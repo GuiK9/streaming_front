@@ -6,9 +6,12 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def home():
+    error = None
+    success = None
+    videos = []
+
     try:
         api_url = os.getenv('DOMAIN_API') + '/api/videos'
-        print(api_url)
         response = requests.get(api_url)
         error = request.args.get('error')
         success = request.args.get('success')
